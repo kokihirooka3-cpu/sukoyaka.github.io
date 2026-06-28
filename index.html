@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ダメージ計算ツール｜ポケモンチャンピオンズ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <h1 class="logo">ダメージ計算ツール<span class="logo-sub">for ポケモンチャンピオンズ</span></h1>
+    <p class="tagline">レベル50シングル・最新の天気／フィールド／道具に対応</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 場の状態（攻守で共有） -->
+  <section class="field-bar card">
+    <h2 class="field-bar__title">場の状態</h2>
+    <div class="field-bar__row">
+      <div class="seg-group" id="weatherGroup">
+        <span class="seg-label">天気</span>
+        <div class="seg" data-state="weather"></div>
+      </div>
+      <div class="seg-group" id="terrainGroup">
+        <span class="seg-label">フィールド</span>
+        <div class="seg" data-state="terrain"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="battle-grid">
+    <!-- 攻撃側 -->
+    <section class="card mon-card mon-card--attacker" id="attackerCard">
+      <div class="mon-card__head">
+        <span class="side-badge">攻撃</span>
+        <div class="mon-name-line">
+          <span class="mon-display-name" data-bind="displayName"></span>
+          <span class="type-chips" data-bind="typeChips"></span>
+        </div>
+      </div>
+      <div class="base-stats" data-bind="baseStats"></div>
+
+      <h3 class="block-title">攻撃技（最大4つ・入力で予測変換）</h3>
+      <div class="move-slots" data-bind="moveSlots"></div>
+
+      <h3 class="block-title">攻撃ステータス</h3>
+      <div class="stat-editors" data-bind="statEditors"></div>
+
+      <h3 class="block-title">特性</h3>
+      <div class="chip-row" data-bind="abilityChips"></div>
+      <label class="inline-toggle" data-bind="overgrowToggle" hidden>
+        <input type="checkbox" data-state="overgrowActive"> しんりょく発動（HP1/3以下）
+      </label>
+
+      <h3 class="block-title">もちもの</h3>
+      <div class="chip-row chip-row--items" data-bind="itemChips"></div>
+
+      <h3 class="block-title">状態</h3>
+      <div class="chip-row">
+        <label class="state-chip"><input type="checkbox" data-state="crit"><span>急所</span></label>
+        <label class="state-chip"><input type="checkbox" data-state="burn"><span>やけど</span></label>
+        <label class="state-chip"><input type="checkbox" data-state="grounded" checked><span>地面にいる</span></label>
+      </div>
+    </section>
+
+    <!-- 防御側 -->
+    <section class="card mon-card mon-card--defender" id="defenderCard">
+      <div class="mon-card__head">
+        <span class="side-badge side-badge--def">防御</span>
+        <div class="mon-name-line">
+          <span class="mon-display-name" data-bind="displayName"></span>
+          <span class="type-chips" data-bind="typeChips"></span>
+        </div>
+      </div>
+      <div class="base-stats" data-bind="baseStats"></div>
+
+      <h3 class="block-title">HP</h3>
+      <div class="hp-editor" data-bind="hpEditor"></div>
+
+      <h3 class="block-title">防御ステータス</h3>
+      <div class="stat-editors" data-bind="statEditors"></div>
+
+      <h3 class="block-title">特性</h3>
+      <div class="chip-row" data-bind="abilityChips"></div>
+
+      <h3 class="block-title">もちもの</h3>
+      <div class="chip-row chip-row--items" data-bind="itemChips"></div>
+
+      <h3 class="block-title">壁・状態</h3>
+      <div class="chip-row">
+        <label class="state-chip"><input type="checkbox" data-state="reflect"><span>リフレクター</span></label>
+        <label class="state-chip"><input type="checkbox" data-state="lightscreen"><span>ひかりのかべ</span></label>
+        <label class="state-chip"><input type="checkbox" data-state="grounded" checked><span>地面にいる</span></label>
+      </div>
+
+      <h3 class="block-title">追加ダメージ</h3>
+      <div class="chip-row">
+        <label class="state-chip"><input type="checkbox" data-state="srOn"><span>ステロ</span></label>
+        <label class="state-chip"><input type="checkbox" data-state="disguiseOn"><span>ばけのかわ</span></label>
+        <label class="state-chip"><input type="checkbox" data-state="rockyHelmet"><span>ゴツメ</span></label>
+        <label class="state-chip"><input type="checkbox" data-state="lifeOrbRecoil"><span>いのちのたま</span></label>
+      </div>
+    </section>
+  </div>
+
+  <!-- 計算結果 -->
+  <section class="card result-card">
+    <h2 class="result-card__title">計算結果</h2>
+    <p class="result-card__hp">相手の最大HP：<span id="resultMaxHP">-</span></p>
+    <div id="fieldAddl" class="field-addl" hidden></div>
+    <div id="resultList" class="result-list"></div>
+  </section>
+
+  <footer class="site-footer">
+    <p>ダメージ計算は第8世代以降（ポケモンチャンピオンズ／SV）の仕様に準拠しています。本ツールは非公式のファン制作物です。</p>
+    <p>ポケモンの種類や技を増やす方法は、同梱の「追加方法.md」を参照してください。</p>
+  </footer>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
